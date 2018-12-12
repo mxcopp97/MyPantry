@@ -1,6 +1,8 @@
 {
   "name": "MyPantry",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "71cd6d9d"
 }
