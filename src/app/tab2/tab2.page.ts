@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, ItemSliding, List } from '@ionic/angular';
 import { ItemListService } from '../item-list.service';
+import { RecipeService } from "../recipe.service";
+
 
 @Component({
   selector: 'app-tab2',
@@ -9,17 +11,22 @@ import { ItemListService } from '../item-list.service';
 })
 export class Tab2Page implements OnInit{
 
-  itemList : string[] = [];
+  itemList : string[][] = [];
 
   ngOnInit(): void {
     this.itemList = this.listService.getItems();
   }
 
-  constructor( public alertController: AlertController, private _ngZone: NgZone, private listService : ItemListService){};
+  constructor( public alertController: AlertController, private _ngZone: NgZone, private listService : ItemListService,
+                  private recipeService : RecipeService){};
 
   async removeItem(itemIndex, itemSlidingList :ItemSliding) {
     itemSlidingList.close();
     await this.listService.remove(itemIndex, itemSlidingList)
+  }
+
+  async searchRecipesFor(){
+    this.recipeService.searchRecipes(this.listService.getItems());
   }
 
   async newAddPrompt(){
@@ -49,12 +56,13 @@ export class Tab2Page implements OnInit{
             }, {
                 text: 'OK',
                 handler: (inputData) => {
-                    let newItem;
-                    if (inputData.newInput) {
-                        newItem = inputData.newInput.trim();
-                        if (newItem !== '') {
+                    let newItem, newItemDate;
+                    if (inputData.newInput && inputData.newDate) {
+                        newItem = inputData.newInput.trim(),
+                        newItemDate = inputData.newDate.trim();
+                        if (newItem !== '' && newItemDate[2]=='-' && newItemDate[5]=='-') {
                           this._ngZone.run(() => {
-                            this.listService.addItem(newItem);
+                            this.listService.addItem(newItem, newItemDate);
                           });
                         } else {
                             console.log('The input string is empty.');
