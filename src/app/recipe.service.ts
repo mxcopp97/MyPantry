@@ -6,36 +6,75 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RecipeService {
 
-  private recipes : string[] = ['link1', 'link2', 'link3'];
+  private responseData;
+  private recipeData : Object[] = [
+    {
+      name: 'Refresh to find recipes based on your food inventory',
+      link: ""
+    }
+  ];
+
+  private recipes : string[] = ['Update to show recipes based on your ingredients'];
 
   constructor(private http: HttpClient) {
    }
-  
-  public getItems(){
+
+  public getRecipeData(){
+    return this.recipeData;
+  }
+
+  public getRecipeList(){
     return this.recipes;
   }
 
-  public searchRecipes(items){
-
-    if(items.length > 0){
-     let recipeUrl = "https://api.edamam.com/search?q=" + items[0] + "&app_id=${30092510}&app_key=${90d5cb195c19bfcfc69e651a692814de}";
-     console.log(this.http.get(recipeUrl));
+  public searchTopRecipes(items, tsFile){
+    if(items.length == 0){
+      console.log("No ingredients to search recipes for!")
+      return;
     }
 
-    let foodUrl = "https://api.weatherbit.io/v2.0/current?key=52120737603741019f32e2d5751a5d24&lat=5&lon=5";
-    console.log(this.http.get(foodUrl));
-
-    let weatherUrl = "https://api.weatherbit.io/v2.0/current?key=52120737603741019f32e2d5751a5d24&lat=50&lon=50",
+    let recipeQuery = "https://www.food2fork.com/api/search?key=e0f06d9e917c4b44d205a4fca1cbef99&q=",
             xhr = new XMLHttpRequest;
     xhr.onreadystatechange = function() {
         if ( xhr.readyState === 4 && xhr.status === 200 ) {
-            var weatherTest = xhr.responseText;
-            console.log(weatherTest)
+            var qResponse = JSON.parse(xhr.responseText);
+            console.log(qResponse);
+            tsFile.uncodeJsonToRecipes(qResponse);
         }
     };
-    xhr.open( "GET", weatherUrl, true );
+    recipeQuery += items[0][0];
+    let i = 1;
+    while(i < 3){
+      if(items.length - 1 < i){
+        break;
+      }
+      else{
+        recipeQuery += ',' + items[i][0];
+      }
+      i++;
+    }
+    xhr.open( "GET", recipeQuery, true );
     xhr.send();
-
   }
 
+/*
+  public uncodeJsonToRecipes(json){
+    this.recipeData = [];
+    this.recipes = [];
+
+    let i = 0
+    while(i < 10 && json.recipes.length > i){
+        this.recipeData.push(
+          {
+            name: json.recipes[i].title,
+            link: json.recipes[i].source_url
+          }
+        );
+      this.recipes.push(json.recipes[i].title);
+      i++;
+    }
+    console.log(this.getRecipeData());
+    console.log(this.recipes);
+  }
+  */
 }

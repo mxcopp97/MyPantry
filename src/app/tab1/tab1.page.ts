@@ -10,19 +10,44 @@ import { RecipeService } from "../recipe.service";
 })
 export class Tab1Page {
 
-  itemList : string[] = [];
+  //individual lists for data use
+  ingredientList : string[][] = [];
 
-  ngOnInit(): void {
-    this.itemList = this.recipeService.getItems();
-  }
+  //itemList for display
+  itemList : Object[];
+  recipeList : string[];
 
   constructor( public alertController: AlertController, private _ngZone: NgZone, private listService : ItemListService,
                   private recipeService : RecipeService){};
 
-  async searchRecipesFor(){
-    this.recipeService.searchRecipes(this.listService.getItems());
+  ngOnInit(): void {
+    this.ingredientList = this.listService.getItems();
+    this.itemList = this.recipeService.getRecipeData();
+    this.recipeList = this.recipeService.getRecipeList();
+
   }
 
 
+  async searchRecipesFor(){
+    this.recipeService.searchTopRecipes(this.ingredientList, this);
+    console.log(this.recipeList);
+  }
+
+  public uncodeJsonToRecipes(json){
+    this.itemList = [];
+    this.recipeList = [];
+
+    let i = 0
+    while(i < 10 && json.recipes.length > i){
+        this.itemList.push(
+          {
+            name: json.recipes[i].title,
+            link: json.recipes[i].source_url
+          }
+        );
+      this.recipeList.push(json.recipes[i].title);
+      i++;
+    }
+  }
 
 }

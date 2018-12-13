@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Globalization } from '@ionic-native/globalization/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +6,9 @@ import { Globalization } from '@ionic-native/globalization/ngx';
 export class ItemListService {
   private items : string[][] = [['bread','7'], ['milk', '3']];
 
-  constructor() { }
+  constructor() {
+      this.items.sort(this.compareCountdown);
+   }
 
   public getItems(){
     return this.items;
@@ -23,7 +24,6 @@ export class ItemListService {
     this.items.splice(itemIndex, 1);
   }
 
-  //Needs work
   //return how many days a current food item has left
   public getCountdown(food : string){
     let currentDate = new Date(), dayInMs=1000*60*60*24;
@@ -44,10 +44,18 @@ export class ItemListService {
     
   }
 
+  //helper compare function for the countdown dates
   private compareCountdown(a, b){
     if (a[1] === b[1]) return 0;
     else return (a[1] < b[1]) ? -1 : 1;
 
   }
+
+  /*
+  private writeToFile(){
+    this.file.checkDir(this.file.dataDirectory, 'mydir').then(_ => console.log('Directory exists')).catch(err =>
+      console.log("Directory doesn't exist"));
+  }
+  */
     
 }

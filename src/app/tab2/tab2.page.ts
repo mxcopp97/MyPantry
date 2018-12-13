@@ -25,10 +25,6 @@ export class Tab2Page implements OnInit{
     await this.listService.remove(itemIndex, itemSlidingList)
   }
 
-  async searchRecipesFor(){
-    this.recipeService.searchRecipes(this.listService.getItems());
-  }
-
   async newAddPrompt(){
     const addTodoAlert = await this.alertController.create(
         {
