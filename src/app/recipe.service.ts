@@ -19,14 +19,17 @@ export class RecipeService {
   constructor(private http: HttpClient) {
    }
 
+  //get the recipe data structure
   public getRecipeData(){
     return this.recipeData;
   }
 
+  //get the recipe list data structure (simplified)
   public getRecipeList(){
     return this.recipes;
   }
 
+  //use the API to find recipes based on the ingredients list top 3
   public searchTopRecipes(items, tsFile){
     if(items.length == 0){
       console.log("No ingredients to search recipes for!")

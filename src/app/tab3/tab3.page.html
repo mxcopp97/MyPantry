@@ -1,3 +1,8 @@
+<!--
+Tab for the nutrition page.
+Users can input a natural language string (eg. "2 apples", 
+  and receive nutrition information
+  -->
 <ion-header>
   <ion-toolbar>
     <ion-title>Nutrition Lookup</ion-title>
@@ -8,7 +13,7 @@
 <ion-content padding>
   <ion-item>
     <ion-label position="floating">Enter food item:</ion-label>
-    <ion-input placeholder="1 large apple" [(ngModel)]="inputText" value="hello"></ion-input>
+    <ion-input placeholder="1 large apple" [(ngModel)]="inputText"></ion-input>
   </ion-item>
   <ion-button (click)="onNewInput()">Get Info</ion-button>
 
@@ -16,4 +21,14 @@
   <ion-item>
     <ion-label>Calories : {{calorieInfo}}</ion-label>
   </ion-item>
+  <ion-item>
+    <ion-label>Weight : {{weight}}g</ion-label>
+  </ion-item>
+  <ion-item *ngFor="let label of healthLabels" >
+    <ion-label >{{label}}</ion-label>
+  </ion-item>
+  <ion-item *ngFor="let label of dietLabels">
+    <ion-label>{{label}}</ion-label>
+  </ion-item>
+  
 </ion-content>

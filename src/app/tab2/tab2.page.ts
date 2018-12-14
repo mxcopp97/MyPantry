@@ -13,6 +13,7 @@ export class Tab2Page implements OnInit{
 
   itemList : string[][] = [];
 
+  //Run once on init
   ngOnInit(): void {
     this.itemList = this.listService.getItems();
     this.writeToFile();
@@ -21,18 +22,19 @@ export class Tab2Page implements OnInit{
   constructor( public alertController: AlertController, private _ngZone: NgZone, private listService : ItemListService,
                   private recipeService : RecipeService, private file: File){};
 
+  //Remove an item with itemSliding, given the index and sliding item list
   async removeItem(itemIndex, itemSlidingList :ItemSliding) {
     itemSlidingList.close();
     await this.listService.remove(itemIndex, itemSlidingList)
   }
 
   private writeToFile(){
-    this.file.checkDir(this.file.dataDirectory, 'mydir').then(_ => console.log('Directory 1 exists')).catch(err => console.log('Directory path 1 doesn\'t exist'));
+    //this.file.createFile(this.file.documentsDirectory, "newFile.txt", false);
     //this.file.createDir(this.file.dataDirectory, "storageFiles", true);
-    //this.file.createFile(this.file.cacheDirectory, "newFile", true );
   }
   
 
+  //create a new add prompt for the user to enter a food and date
   async newAddPrompt(){
     const addTodoAlert = await this.alertController.create(
         {
@@ -80,5 +82,6 @@ export class Tab2Page implements OnInit{
             ]
         });
         await addTodoAlert.present();
+        
     }
 }

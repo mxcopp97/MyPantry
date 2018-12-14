@@ -4,15 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ItemListService {
-  private items : string[][] = [['bread','7'], ['milk', '3']];
+  private items : string[][] = [['broccoli','7'], ['cheese', '3']];
 
   constructor() {
       this.items.sort(this.compareCountdown);
    }
-
+  
+  //return the item structure
   public getItems(){
     return this.items;
   }
+  //add an item to the data structure
   public addItem(item, date){
     let count = this.getCountdown(date);
     let newEntry : string[] = [item, count];
@@ -20,6 +22,7 @@ export class ItemListService {
     this.items.sort(this.compareCountdown);
   }
 
+  //remove an item from the data structure
   public remove(itemIndex, itemSlidingList){
     this.items.splice(itemIndex, 1);
   }

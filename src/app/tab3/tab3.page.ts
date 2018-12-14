@@ -9,12 +9,16 @@ export class Tab3Page implements OnInit {
 
   inputText : string = '';
   calorieInfo;
+  weight;
+  healthLabels : string [];
+  dietLabels : string [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  //on new input, do an api call
   onNewInput(){
     console.log("NEW INPUT");
     console.log(this.inputText);
@@ -22,6 +26,7 @@ export class Tab3Page implements OnInit {
     this.doApiCall(this.inputText, this);
   }
 
+  //do the api call, searching nutrition info for the input text
   doApiCall(text:string, tsFile){
 
     text = text.trim();
@@ -49,9 +54,22 @@ export class Tab3Page implements OnInit {
   }
 
 
-
+  //link the info from the json back into the data structures in this file
   public displayInfo(json) {
       this.calorieInfo = json.calories;
+      this.dietLabels = json.dietLabels;
+      this.healthLabels = json.healthLabels;
+      this.weight = json.totalWeight;
+
+      /*
+      this.dietLabels.forEach(element => {
+        element = element.replace("_", " ")
+      });
+     this.healthLabels.forEach(element => {
+        element = element.replace("_", " ")
+      });
+      */
+
   }
 
 }
