@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, ItemSliding, List } from '@ionic/angular';
 import { ItemListService } from '../item-list.service';
 import { RecipeService } from "../recipe.service";
-
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -15,15 +15,23 @@ export class Tab2Page implements OnInit{
 
   ngOnInit(): void {
     this.itemList = this.listService.getItems();
+    this.writeToFile();
   }
 
   constructor( public alertController: AlertController, private _ngZone: NgZone, private listService : ItemListService,
-                  private recipeService : RecipeService){};
+                  private recipeService : RecipeService, private file: File){};
 
   async removeItem(itemIndex, itemSlidingList :ItemSliding) {
     itemSlidingList.close();
     await this.listService.remove(itemIndex, itemSlidingList)
   }
+
+  private writeToFile(){
+    this.file.checkDir(this.file.dataDirectory, 'mydir').then(_ => console.log('Directory 1 exists')).catch(err => console.log('Directory path 1 doesn\'t exist'));
+    //this.file.createDir(this.file.dataDirectory, "storageFiles", true);
+    //this.file.createFile(this.file.cacheDirectory, "newFile", true );
+  }
+  
 
   async newAddPrompt(){
     const addTodoAlert = await this.alertController.create(

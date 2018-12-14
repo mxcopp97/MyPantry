@@ -6,17 +6,26 @@
   <ion-tab tab="tab2">
     <ion-router-outlet name="tab2"></ion-router-outlet>
   </ion-tab>
+  <ion-tab tab="tab3">
+    <ion-router-outlet name="tab3"></ion-router-outlet>
+  </ion-tab>
+
 
   <ion-tab-bar slot="bottom">
 
     <ion-tab-button tab="tab1" href="/tabs/(tab1:tab1)">
       <ion-icon name="bookmarks"></ion-icon>
-      <ion-label>Recipes</ion-label>
+      <ion-label>Recipe Ideas</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab2" href="/tabs/(tab2:tab2)">
       <ion-icon name="basket"></ion-icon>
       <ion-label>Inventory</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3" href="/tabs/(tab3:tab3)">
+      <ion-icon name="search"></ion-icon>
+      <ion-label>Nutrition Lookup</ion-label>
     </ion-tab-button>
 
   </ion-tab-bar>

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nutrition Lookup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label position="floating">Enter food item:</ion-label>
+    <ion-input placeholder="1 large apple" [(ngModel)]="inputText" value="hello"></ion-input>
+  </ion-item>
+  <ion-button (click)="onNewInput()">Get Info</ion-button>
+
+
+  <ion-item>
+    <ion-label>{{calorieInfo}}</ion-label>
+  </ion-item>
+</ion-content>
